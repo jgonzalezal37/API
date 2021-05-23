@@ -1,0 +1,837 @@
+{
+	"info": {
+		"_postman_id": "04e99f48-f235-4439-86b1-9bf386dff308",
+		"name": "API de SOS2021-02 v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "proyectoGrupo v2",
+			"item": [
+				{
+					"name": "loadInitialData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/loadInitialData",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"loadInitialData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear un dato",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The new data is correctly defined\", function () {\r",
+									"\tconst jsonData = JSON.parse(pm.request.body.raw);\r",
+									"\tpm.expect(jsonData.country).to.be.a(\"string\");\r",
+									"\tpm.expect(jsonData.year).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData['production']).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData['exportation']).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData['distribution']).to.be.a(\"number\");\r",
+									"\r",
+									"});\t\t\t\t\t\t\t\t "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"country\": \"prueba1\",\r\n        \"year\": 2011,\r\n\t\t\"production\": 3,\r\n\t\t\"exportation\": 0.38,\r\n\t\t\"distribution\": 9.22\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear un dato con atributo diferente error",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"country\": \"prueba\",\r\n        \"year\": 2011,\r\n\t\t\"production\": 3,\r\n\t\t\"exportation\": 0.38,\r\n\t\t\"consumption\": 9.22\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear un dato que ya existe ERROR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"country\": \"Spain\",\r\n        \"year\": 2011,\r\n\t\t\"production\": 3,\r\n\t\t\"exportation\": 0.38,\r\n\t\t\"consumption\": 9.22\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "todos los datos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginacion limit y offset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"There is 2 countries\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats?limit=2&offset=0",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "busqueda por pais",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There is only 1 country with that name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.country).to.eql(\"Spain\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats?country=Spain",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "Spain"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "busqueda por atributos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"All the fields are correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[\"production\"]).to.eql(160);\r",
+									"    pm.expect(jsonData[\"exportation\"]).to.eql(1.26);\r",
+									"    pm.expect(jsonData[\"distribution\"]).to.eql(3.85);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats?production=160&exportation=1.26&distribution=3.85",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							],
+							"query": [
+								{
+									"key": "production",
+									"value": "160"
+								},
+								{
+									"key": "exportation",
+									"value": "1.26"
+								},
+								{
+									"key": "distribution",
+									"value": "3.85"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "busqueda por production",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The field production is correctly defined\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[\"production\"]).to.eql(669.1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats?production=669.1",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							],
+							"query": [
+								{
+									"key": "production",
+									"value": "669.1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dato concreto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Spain/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Spain",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dato concreto que no existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Morocco/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Morocco",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dato concreto con un solo campo ERROR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Spain",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Spain"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "un dato",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The new data is correctly modified\", function () {\r",
+									"\tconst jsonData = JSON.parse(pm.request.body.raw);\r",
+									"\tpm.expect(jsonData.country).to.be.a(\"string\");\r",
+									"\tpm.expect(jsonData.year).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData['production']).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData['exportation']).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData['distribution']).to.be.a(\"number\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"country\": \"Spain\",\r\n        \"year\": 2011,\r\n\t\t\"production\": 4,\r\n\t\t\"exportation\": 1,\r\n\t\t\"distribution\": 1\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Spain/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Spain",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "un dato",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/USA/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"USA",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "un dato Copy 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Spain/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Spain",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "un dato Copy 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Turkey/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Turkey",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "un dato Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Italy/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Italy",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "un dato Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Greece/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Greece",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a un country y year ERROR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {\r",
+									"    pm.response.to.have.status(405);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"country\": \"Spain\",\r\n        \"year\": 2011,\r\n\t\t\"production\": 3,\r\n\t\t\"exportation\": 0.38,\r\n\t\t\"distribution\": 9.22\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats/Spain/2011",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats",
+								"Spain",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a lista ERROR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {\r",
+									"    pm.response.to.have.status(405);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a lista",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HEROKU}}/api/v2/oil-production-stats",
+							"host": [
+								"{{HEROKU}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"oil-production-stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "HEROKU",
+			"value": "http://sos2021-02.herokuapp.com"
+		}
+	]
+}
